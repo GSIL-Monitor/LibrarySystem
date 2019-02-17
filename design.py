@@ -12,6 +12,7 @@ class SystemTools():
             return False
         else:
             return True        
+    
     def regist(self,username,password):
         quary = "SELECT * FROM userdb where username ='{}'".format(username)
         result = self.db.execute(quary)
@@ -31,6 +32,8 @@ class SystemTools():
         else:
             print('原始密码错误')
             return False
+    def check_password(self,password):
+        return True
 class BookTools():
     def __init__(self):
         pass
@@ -92,10 +95,16 @@ class LibrarySystem():
         else:
             print('登录失败')
             self.init_system()
+
+    
     def regist(self):
         username = str(input('请输入用户名:')).strip()
         password = str(input('请输入密码:')).strip()
         password_2 = str(input('请确认密码:')).strip()
+        result_password = self.system_tools.check_password(password)
+        if not result_password:
+            print('密码不满足要求')
+            return False
         if password!=password_2:
             print('两次密码不同')
             self.init_system()
